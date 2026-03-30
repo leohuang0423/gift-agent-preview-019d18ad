@@ -1,0 +1,1950 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mother's Day Gift Agent Review Prototype</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f1ea;
+        --panel: rgba(255, 255, 255, 0.88);
+        --card: #ffffff;
+        --subtle: #f7f5f1;
+        --line: rgba(17, 24, 39, 0.08);
+        --line-strong: rgba(17, 24, 39, 0.16);
+        --text: #111318;
+        --secondary: #5f6673;
+        --tertiary: #8d93a0;
+        --blue: #0a84ff;
+        --blue-soft: rgba(10, 132, 255, 0.12);
+        --green: #2fb065;
+        --green-soft: rgba(47, 176, 101, 0.12);
+        --rose: #f7e5e8;
+        --rose-deep: #b35b6a;
+        --shadow: 0 28px 60px rgba(15, 23, 42, 0.08);
+        --card-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+        --radius-xl: 30px;
+        --radius-lg: 22px;
+        --radius-md: 18px;
+        --radius-sm: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          "SF Pro Text",
+          "SF Pro Display",
+          "Helvetica Neue",
+          sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.94), transparent 28%),
+          linear-gradient(180deg, #eceff3 0%, #ece6da 100%);
+        color: var(--text);
+        padding: 28px;
+      }
+
+      .page {
+        width: min(1460px, 100%);
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 18px 22px;
+        border-radius: 30px;
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(20px);
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .meta-pill {
+        min-height: 30px;
+        padding: 0 12px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--secondary);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .hero h1 {
+        margin: 0 0 6px;
+        font-size: clamp(28px, 3.6vw, 42px);
+        line-height: 1.04;
+        letter-spacing: -0.05em;
+      }
+
+      .hero p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.55;
+        color: var(--secondary);
+      }
+
+      .principles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .principle {
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(17, 24, 39, 0.06);
+      }
+
+      .principle strong {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 13px;
+      }
+
+      .principle span {
+        display: block;
+        color: var(--secondary);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .review-grid {
+        display: grid;
+        grid-template-columns: minmax(440px, 0.94fr) minmax(360px, 0.86fr);
+        gap: 26px;
+        margin-top: 24px;
+        align-items: start;
+      }
+
+      .panel {
+        padding: 18px;
+        border-radius: 28px;
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: end;
+        margin-bottom: 14px;
+      }
+
+      .panel-label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--secondary);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .panel-subcopy {
+        margin: 0;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .prototype-column {
+        position: sticky;
+        top: 24px;
+      }
+
+      .device {
+        width: min(430px, 100%);
+        margin: 0 auto;
+        padding: 10px;
+        border-radius: 42px;
+        background: linear-gradient(180deg, #262c36, #0f1217);
+        box-shadow:
+          0 32px 70px rgba(15, 23, 42, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+
+      .screen {
+        position: relative;
+        height: min(860px, calc(100vh - 180px));
+        min-height: 760px;
+        overflow: hidden;
+        border-radius: 34px;
+        background: #f2f2f7;
+      }
+
+      .island {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 118px;
+        height: 30px;
+        border-radius: 999px;
+        background: #000;
+        z-index: 4;
+      }
+
+      .statusbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 20px 6px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .phone-content {
+        height: calc(100% - 34px);
+        overflow-y: auto;
+        padding: 8px 16px 142px;
+        scrollbar-width: none;
+      }
+
+      .phone-content::-webkit-scrollbar {
+        display: none;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        margin: -10px -16px 14px;
+        padding: 10px 16px 8px;
+        background: linear-gradient(180deg, rgba(242, 242, 247, 0.96), rgba(242, 242, 247, 0.82) 72%, rgba(242, 242, 247, 0));
+        backdrop-filter: saturate(180%) blur(18px);
+      }
+
+      .navrow {
+        min-height: 44px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .ghost-btn,
+      .context-badge,
+      .route-voice-btn,
+      .sheet-hold-btn,
+      .sheet-close,
+      .bubble-trigger {
+        font: inherit;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .ghost-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.82);
+        color: var(--blue);
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .eyebrow {
+        margin: 4px 0 0;
+        color: var(--secondary);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .screen-title {
+        margin: 2px 0 4px;
+        font-size: 28px;
+        line-height: 1.04;
+        letter-spacing: -0.05em;
+      }
+
+      .screen-subtitle {
+        margin: 0;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.42;
+        letter-spacing: -0.01em;
+      }
+
+      .title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 10px;
+      }
+
+      .context-badge {
+        min-height: 32px;
+        padding: 0 10px 0 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--secondary);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+      }
+
+      .context-badge em {
+        width: 20px;
+        height: 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: #111318;
+        color: #fff;
+        font-style: normal;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .route-card,
+      .bottom-sheet,
+      .recording-screen {
+        background: var(--card);
+        box-shadow: var(--card-shadow);
+      }
+
+      .callout {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: #111318;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .secondary-details {
+        margin-top: 10px;
+      }
+
+      .secondary-details[open] {
+        margin-top: 10px;
+      }
+
+      .secondary-details summary {
+        list-style: none;
+      }
+
+      .secondary-details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .secondary-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 32px;
+        padding: 0 11px;
+        border-radius: 999px;
+        background: #f5f6f8;
+        color: var(--secondary);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .secondary-toggle::after {
+        content: "›";
+        font-size: 16px;
+        transform: translateY(-1px);
+      }
+
+      .secondary-details[open] .secondary-toggle::after {
+        transform: rotate(90deg);
+      }
+
+      .memory-stack {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .memory-item {
+        padding: 10px 12px;
+        border-radius: 16px;
+        background: var(--subtle);
+        border: 1px solid var(--line);
+      }
+
+      .memory-item strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 13px;
+      }
+
+      .memory-item p {
+        margin: 0;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .stack {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .route-card {
+        position: relative;
+        padding: 15px 14px 13px;
+        border-radius: 22px;
+      }
+
+      .route-card.alt {
+        background: linear-gradient(180deg, #ffffff, #fcfbf8);
+      }
+
+      .route-kicker {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 0 9px;
+        border-radius: 999px;
+        background: var(--blue-soft);
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .route-card.alt .route-kicker {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .route-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: start;
+        margin-top: 8px;
+      }
+
+      .route-name {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .route-price {
+        font-size: 15px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .route-summary {
+        margin: 7px 0 0;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.45;
+        letter-spacing: -0.01em;
+      }
+
+      .quick-tags {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        margin-top: 9px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 1px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .quick-tags::-webkit-scrollbar {
+        display: none;
+      }
+
+      .quick-tag {
+        min-height: 26px;
+        padding: 0 9px;
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: #f4f5f8;
+        color: var(--secondary);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .reason-stack {
+        display: grid;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .reason-item {
+        padding: 10px 11px;
+        border-radius: 15px;
+        background: var(--subtle);
+        border: 1px solid var(--line);
+      }
+
+      .reason-item strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+      }
+
+      .reason-item span {
+        display: block;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .gift-note {
+        margin-top: 10px;
+        color: var(--secondary);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .question-card {
+        padding: 15px 14px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, #fff7f8, #fffefe);
+        border: 1px solid rgba(179, 91, 106, 0.12);
+        box-shadow: var(--card-shadow);
+      }
+
+      .question-kicker {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(179, 91, 106, 0.12);
+        color: var(--rose-deep);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .question-title {
+        margin: 9px 0 0;
+        font-size: 20px;
+        line-height: 1.12;
+        letter-spacing: -0.04em;
+      }
+
+      .question-copy {
+        margin: 7px 0 0;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .question-prompt-list {
+        display: grid;
+        gap: 7px;
+        margin-top: 10px;
+      }
+
+      .question-prompt {
+        padding: 9px 11px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(179, 91, 106, 0.1);
+        color: var(--secondary);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .gift-note strong {
+        color: var(--text);
+      }
+
+      .route-voice-btn {
+        width: 100%;
+        min-height: 54px;
+        margin-top: 10px;
+        padding: 9px 12px;
+        border-radius: 17px;
+        background: #111318;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+      }
+
+      .route-card.alt .route-voice-btn {
+        background: #17351f;
+      }
+
+      .voice-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .voice-copy strong {
+        display: block;
+        font-size: 14px;
+        line-height: 1.15;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .voice-copy span {
+        display: block;
+        margin-top: 2px;
+        font-size: 12px;
+        line-height: 1.2;
+        color: rgba(255, 255, 255, 0.78);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .agent-avatar {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+      }
+
+      .agent-avatar.large {
+        width: 70px;
+        height: 70px;
+      }
+
+      .agent-face {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #ffefe7, #ffd8cf);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      }
+
+      .agent-face::before,
+      .agent-face::after {
+        content: "";
+        position: absolute;
+        top: 18px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #574340;
+      }
+
+      .agent-face::before {
+        left: 13px;
+      }
+
+      .agent-face::after {
+        right: 13px;
+      }
+
+      .agent-mouth {
+        position: absolute;
+        left: 50%;
+        bottom: 11px;
+        width: 14px;
+        height: 7px;
+        transform: translateX(-50%);
+        border: 2px solid #574340;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .agent-bow {
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        width: 16px;
+        height: 10px;
+        transform: translateX(-50%);
+        border-radius: 999px;
+        background: linear-gradient(180deg, #f28ea2, #d75c7a);
+      }
+
+      .refined-strip {
+        margin-top: 8px;
+        padding: 8px 10px 9px;
+        border-radius: 14px;
+        background: #fff7f8;
+        border: 1px solid rgba(179, 91, 106, 0.14);
+      }
+
+      .refined-strip.hidden {
+        display: none;
+      }
+
+      .refined-strip strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 11px;
+        line-height: 1.2;
+      }
+
+      .refined-tags {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 1px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .refined-tags::-webkit-scrollbar {
+        display: none;
+      }
+
+      .refined-tag {
+        min-height: 28px;
+        padding: 0 9px;
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: #ffffff;
+        color: var(--rose-deep);
+        border: 1px solid rgba(179, 91, 106, 0.15);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .bubble-trigger {
+        position: absolute;
+        right: 14px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 52px;
+        max-width: 152px;
+        padding: 6px 10px 6px 6px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+      }
+
+      .bubble-copy {
+        text-align: left;
+        min-width: 0;
+      }
+
+      .bubble-copy strong {
+        display: block;
+        font-size: 13px;
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .bubble-copy span {
+        display: block;
+        margin-top: 2px;
+        color: var(--secondary);
+        font-size: 11px;
+        line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .sheet-backdrop,
+      .recording-backdrop {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+      }
+
+      .sheet-backdrop {
+        background: rgba(17, 19, 24, 0.18);
+        z-index: 7;
+      }
+
+      .recording-backdrop {
+        background: rgba(17, 19, 24, 0.64);
+        z-index: 9;
+      }
+
+      .sheet-backdrop.open,
+      .recording-backdrop.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .bottom-sheet {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 8;
+        padding: 14px 16px 18px;
+        border-radius: 28px;
+        transform: translateY(118%);
+        transition: transform 220ms ease;
+      }
+
+      .bottom-sheet.open {
+        transform: translateY(0);
+      }
+
+      .memory-sheet .sheet-header {
+        display: block;
+      }
+
+      .memory-sheet-title-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .grabber {
+        width: 38px;
+        height: 5px;
+        margin: 0 auto 14px;
+        border-radius: 999px;
+        background: rgba(17, 24, 39, 0.14);
+      }
+
+      .sheet-header {
+        display: flex;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .sheet-header h3 {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+      }
+
+      .sheet-header p {
+        margin: 6px 0 0;
+        color: var(--secondary);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .guide-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .guide-item {
+        padding: 11px 12px;
+        border-radius: 15px;
+        background: var(--subtle);
+        border: 1px solid var(--line);
+        color: var(--secondary);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .sheet-hold-btn {
+        width: 100%;
+        min-height: 56px;
+        margin-top: 14px;
+        padding: 0 16px;
+        border-radius: 18px;
+        background: #111318;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .sheet-close {
+        width: 100%;
+        min-height: 46px;
+        margin-top: 10px;
+        border-radius: 16px;
+        background: #eef5ff;
+        color: var(--blue);
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .recording-screen {
+        position: absolute;
+        inset: 14px;
+        z-index: 10;
+        padding: 18px;
+        border-radius: 30px;
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.98);
+        transition:
+          opacity 180ms ease,
+          transform 180ms ease;
+      }
+
+      .recording-screen.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+      }
+
+      .recording-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .recording-title {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.06;
+        letter-spacing: -0.04em;
+      }
+
+      .recording-copy {
+        margin: 6px 0 0;
+        color: var(--secondary);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .wave {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        gap: 7px;
+        height: 86px;
+        margin-top: 26px;
+      }
+
+      .wave span {
+        width: 8px;
+        border-radius: 999px;
+        background: var(--blue);
+        animation: pulse 0.9s ease-in-out infinite;
+      }
+
+      .wave span:nth-child(1) { height: 22px; animation-delay: 0s; }
+      .wave span:nth-child(2) { height: 46px; animation-delay: 0.08s; }
+      .wave span:nth-child(3) { height: 32px; animation-delay: 0.16s; }
+      .wave span:nth-child(4) { height: 58px; animation-delay: 0.24s; }
+      .wave span:nth-child(5) { height: 38px; animation-delay: 0.32s; }
+      .wave span:nth-child(6) { height: 50px; animation-delay: 0.4s; }
+
+      @keyframes pulse {
+        0%, 100% { transform: scaleY(0.72); opacity: 0.62; }
+        50% { transform: scaleY(1.02); opacity: 1; }
+      }
+
+      .live-text {
+        margin-top: 20px;
+        padding: 14px 15px;
+        border-radius: 16px;
+        background: var(--subtle);
+        border: 1px solid var(--line);
+        font-size: 15px;
+        line-height: 1.58;
+      }
+
+      .recording-hint {
+        margin-top: 16px;
+        color: var(--secondary);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .notes-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .note-card {
+        padding: 14px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(17, 24, 39, 0.06);
+      }
+
+      .note-head {
+        display: flex;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .note-number {
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: #111318;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .note-title {
+        margin: 2px 0 4px;
+        font-size: 17px;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+      }
+
+      .note-body {
+        margin: 0;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .note-points {
+        display: grid;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .point {
+        padding: 9px 11px;
+        border-radius: 14px;
+        background: #f7f7f9;
+        color: var(--secondary);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .point strong {
+        color: var(--text);
+      }
+
+      .review-check {
+        margin-top: 14px;
+        padding: 14px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #fdfdfd, #f7f7f9);
+        border: 1px solid rgba(17, 24, 39, 0.08);
+      }
+
+      .review-check h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        line-height: 1.12;
+        letter-spacing: -0.03em;
+      }
+
+      .check-list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--secondary);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 1180px) {
+        .hero-grid,
+        .review-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .prototype-column {
+          position: static;
+        }
+      }
+
+      @media (max-width: 520px) {
+        body {
+          padding: 14px;
+        }
+
+        .hero,
+        .panel {
+          padding: 18px;
+          border-radius: 24px;
+        }
+
+        .device {
+          width: 100%;
+          padding: 0;
+          border-radius: 0;
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .screen {
+          height: 100dvh;
+          min-height: 100dvh;
+          border-radius: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-meta">
+          <span class="meta-pill">Review Artifact</span>
+          <span class="meta-pill">Mother's Day</span>
+          <span class="meta-pill">Memory First</span>
+          <span class="meta-pill">Voice Refinement</span>
+        </div>
+
+        <h1>让原型说话，让说明退后。</h1>
+        <p>主屏先给可消费的礼物路线，偏好依据和推荐理由都降级成可展开的次级信息。</p>
+
+        <div class="principles">
+          <div class="principle">
+            <strong>默认短</strong>
+            <span>首屏只保留结论和统一动作。</span>
+          </div>
+          <div class="principle">
+            <strong>依据收起</strong>
+            <span>偏好与推荐依据按需展开。</span>
+          </div>
+          <div class="principle">
+            <strong>一个入口</strong>
+            <span>所有 refinement 都回到按住说话。</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="review-grid">
+        <div class="panel prototype-column">
+          <div class="panel-head">
+            <div>
+              <span class="panel-label">Prototype</span>
+              <h2>母亲节送礼主屏</h2>
+            </div>
+            <p class="panel-subcopy">现在主屏更短，依据信息默认收起。</p>
+          </div>
+
+          <div class="device">
+            <div class="screen">
+              <div class="island" aria-hidden="true"></div>
+              <div class="statusbar">
+                <span>9:41</span>
+                <span>5G 100%</span>
+              </div>
+
+              <div class="phone-content">
+                <div class="topbar">
+                  <div class="navrow">
+                    <button class="ghost-btn" id="resetButton">重置</button>
+                    <button class="ghost-btn" id="saveButton">收藏</button>
+                  </div>
+                  <p class="eyebrow">母亲节送礼</p>
+                  <div class="title-row">
+                    <h1 class="screen-title">先看这 6 个</h1>
+                    <button class="context-badge" id="memoryBadge">已参考 <em>1</em></button>
+                  </div>
+                  <p class="screen-subtitle" id="screenSubtitle">
+                    先给你 6 个方向，滑到第 3 个我再追问。
+                  </p>
+                  <div class="refined-strip hidden" id="refinedStrip">
+                    <strong>已加进来</strong>
+                    <div class="refined-tags" id="refinedTags"></div>
+                  </div>
+                </div>
+
+                <div class="stack" id="cardsList"></div>
+              </div>
+
+              <button class="bubble-trigger" id="bubbleTrigger">
+                <div class="agent-avatar" aria-hidden="true">
+                  <div class="agent-face"></div>
+                  <div class="agent-bow"></div>
+                  <div class="agent-mouth"></div>
+                </div>
+                <div class="bubble-copy">
+                  <strong>跟小礼说一句</strong>
+                  <span>点开后按住说</span>
+                </div>
+              </button>
+
+              <div class="sheet-backdrop" id="sheetBackdrop"></div>
+              <div class="bottom-sheet memory-sheet" id="memorySheet">
+                <div class="grabber"></div>
+                <div class="sheet-header">
+                  <div class="memory-sheet-title-row">
+                    <h3>我参考了什么</h3>
+                    <button class="sheet-close" id="memorySheetClose" style="width:auto;min-width:44px;margin-top:0;padding:0 14px;">关闭</button>
+                  </div>
+                  <p id="memoryIntro">
+                    已参考你的送礼记录和最近 7 天在看的内容。
+                  </p>
+                </div>
+                <div class="memory-pills" id="memoryPills"></div>
+                <div class="memory-stack" id="memoryStack"></div>
+              </div>
+
+              <div class="bottom-sheet" id="assistantSheet">
+                <div class="grabber"></div>
+                <div class="sheet-header">
+                  <div class="agent-avatar large" aria-hidden="true">
+                    <div class="agent-face"></div>
+                    <div class="agent-bow"></div>
+                    <div class="agent-mouth"></div>
+                  </div>
+                  <div>
+                    <h3 id="sheetTitle">看到这里，我还差 3 个关键条件</h3>
+                    <p id="sheetCopy">
+                      这 3 个问题最容易改变命中率。你不用打字，按住说一段就行。
+                    </p>
+                  </div>
+                </div>
+
+                <div class="guide-list" id="questionGuides"></div>
+
+                <button class="sheet-hold-btn" id="sheetHoldButton">按住说一段</button>
+                <button class="sheet-close" id="sheetClose">先不说了</button>
+              </div>
+
+              <div class="recording-backdrop" id="recordingBackdrop"></div>
+              <div class="recording-screen" id="recordingScreen">
+                <div class="recording-top">
+                  <div class="agent-avatar large" aria-hidden="true">
+                    <div class="agent-face"></div>
+                    <div class="agent-bow"></div>
+                    <div class="agent-mouth"></div>
+                  </div>
+                  <div>
+                    <h3 class="recording-title" id="recordingTitle">正在听，你继续说</h3>
+                    <p class="recording-copy" id="recordingCopy">
+                      给谁买、她平时喜欢什么、最怕什么坑、预算大概多少，都可以自然说。
+                    </p>
+                  </div>
+                </div>
+
+                <div class="wave" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+
+                <div class="live-text" id="liveText">“我妈平时不太戴耳饰，香味要淡一点，预算六百左右，看起来要体面。”</div>
+                <p class="recording-hint">松开后我会先整理成一句可编辑的理解，再重排这组卡片，不会黑箱替你决定。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <div class="panel-head">
+            <div>
+              <span class="panel-label">Design Notes</span>
+              <h2>四个关键判断</h2>
+            </div>
+            <p class="panel-subcopy">压缩成短判断，避免说明盖过原型。</p>
+          </div>
+
+          <div class="notes-list">
+            <article class="note-card">
+              <div class="note-head">
+                <div class="note-number">1</div>
+                <div>
+                  <h3 class="note-title">偏好依据退出主流内容流，改成角标备注</h3>
+                  <p class="note-body">这类信息有价值，但不该占据首屏高度。默认只留一个可点击的小入口。</p>
+                </div>
+              </div>
+              <div class="note-points">
+                <div class="point"><strong>原则：</strong>先给结果，依据后看。</div>
+                <div class="point"><strong>评审：</strong>首屏不再有大块记忆框。</div>
+              </div>
+            </article>
+
+            <article class="note-card">
+              <div class="note-head">
+                <div class="note-number">2</div>
+                <div>
+                  <h3 class="note-title">第一轮先给 6 个，让用户先连续浏览</h3>
+                  <p class="note-body">不要太早追问。先把 6 张可消费的路线放出来，让用户快速建立范围感和偏好感。</p>
+                </div>
+              </div>
+              <div class="note-points">
+                <div class="point"><strong>原则：</strong>先浏览，再收敛。</div>
+                <div class="point"><strong>评审：</strong>默认首轮至少能看到 6 个方向。</div>
+              </div>
+            </article>
+
+            <article class="note-card">
+              <div class="note-head">
+                <div class="note-number">3</div>
+                <div>
+                  <h3 class="note-title">看到第 3 个后，插一个 agent 主导的提问卡</h3>
+                  <p class="note-body">不是用户自己想该补什么，而是系统主动追问最能改变命中的 3 个关键问题。</p>
+                </div>
+              </div>
+              <div class="note-points">
+                <div class="point"><strong>原则：</strong>让 agent 主导追问，而不是让用户自己猜。</div>
+                <div class="point"><strong>评审：</strong>问题卡必须插在浏览流中段，而不是顶端。</div>
+              </div>
+            </article>
+
+            <article class="note-card">
+              <div class="note-head">
+                <div class="note-number">4</div>
+                <div>
+                  <h3 class="note-title">让 IP 形象贯穿主屏、气泡、半屏引导和全屏录音态</h3>
+                  <p class="note-body">用户记住的不是按钮，而是同一个会听他说话的助手。</p>
+                </div>
+              </div>
+              <div class="note-points">
+                <div class="point"><strong>原则：</strong>同一人格、同一入口、同一动作。</div>
+                <div class="point"><strong>评审：</strong>气泡到录音态不能像换系统。</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="review-check">
+            <h3>评审只看 4 个问题</h3>
+            <ol class="check-list">
+              <li>首屏是不是先给结论，而不是先讲理由？</li>
+              <li>是不是先给了 6 个方向，而不是太早让用户回答问题？</li>
+              <li>第 3 张后面的追问卡，是不是问到了会真改变排序的关键问题？</li>
+              <li>IP 气泡到录音态是不是像同一个助手？</li>
+            </ol>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      const states = {
+        default: {
+          subtitle: "先给你 6 个方向，滑到第 3 个我再追问。",
+          memoryIntro: "已参考你的送礼记录和最近 7 天在看的内容。",
+          memoryPills: ["送礼记录", "最近在看", "预算带"],
+          memory: [
+            {
+              title: "长期记忆草稿",
+              copy:
+                "过去一年你给妈妈买过护手霜、茶礼和羊绒围巾，客单多在 300 到 800。你明显更偏体面、低风险、看起来认真挑过的礼物。"
+            },
+            {
+              title: "最近 7 天行为",
+              copy:
+                "你最近停留最长的是珍珠饰品、轻香型礼盒和真丝配饰，反复点开的词是“包装好看”和“不容易送错”。"
+            }
+          ],
+          refined: [],
+          questionTool: {
+            kicker: "再补一句，我来追问",
+            title: "看到这里，再帮我补 3 个点",
+            copy: "这 3 个点最会改排序。按住说一段就行。",
+            prompts: [
+              "这次是家宴当面送，还是提前寄到家？",
+              "她更吃穿戴配饰，还是更喜欢香味和日用？",
+              "预算是想控制在 500 内，还是 600 到 800 都可以？"
+            ],
+            cardButtonTitle: "我来追问 3 个点",
+            cardButtonHint: "按住说家宴 / 偏好 / 预算",
+            holdTitle: "按住说一段"
+          },
+          recordingTitle: "正在听，我会围着这 3 个问题追问",
+          recordingCopy: "送礼场景、她更偏哪类礼物、预算上限，这 3 个最容易把后面 3 张卡改得更准。",
+          liveText: "“这周日家庭聚餐时送，她不太戴耳饰，更喜欢淡一点的香，预算六百左右。”",
+          cards: [
+            {
+              kicker: "更稳妥地送",
+              name: "淡水珍珠耳钉礼盒",
+              price: "¥699",
+              summary: "体面、不容易送错，也更像你过去会给妈妈挑的那类礼物。",
+              tags: ["体面", "不挑尺码", "日常能戴"],
+              voiceHint: "比如：她平时不太戴耳饰",
+              recordingCopy: "你补一句她会不会戴、会不会嫌麻烦，或者你其实更想送出什么感觉，我就先围着这张继续改。",
+              reasons: [
+                {
+                  title: "为什么会先出现",
+                  copy: "珍珠这条线和你最近看的内容最接近，而且拿来就能送，不用额外猜尺码。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太年轻化、太浮夸、像节日活动赠品的款式，都已经先排掉了。"
+                }
+              ],
+              giftNote: "默认带礼盒包装和一句不尴尬的贺卡文案。",
+              alt: false
+            },
+            {
+              kicker: "如果你更想送出氛围感",
+              name: "栀子木兰香氛护理礼盒",
+              price: "¥459",
+              summary: "更柔和、更有节日氛围，是比配饰更轻一点的第二条路线。",
+              tags: ["轻香", "更有氛围", "预算更轻"],
+              voiceHint: "比如：她闻香会比较挑",
+              recordingCopy: "你补一句她能不能接受香味、平时用不用这类东西，我就先围着这条香氛路线继续改。",
+              reasons: [
+                {
+                  title: "为什么会先出现",
+                  copy: "你最近反复停留的内容里，“包装体面、香气轻、不像临时凑单”的信号出现得很多。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太浓香、太甜腻、包装浮夸和打开一次就闲置的礼盒，都已经先筛掉了。"
+                }
+              ],
+              giftNote: "香型和包装感都已经先帮你筛过一轮。",
+              alt: true
+            },
+            {
+              kicker: "如果你还想留得更久一点",
+              name: "真丝小方巾礼盒",
+              price: "¥569",
+              summary: "比香氛更耐留，也比首饰更轻风险，是稳中带一点心意的路线。",
+              tags: ["留得住", "体面", "不那么重"],
+              voiceHint: "比如：她平时会不会系丝巾",
+              recordingCopy: "你补一句她的日常穿戴习惯，或者你更在意留存感还是当场体面，我就先围着这张继续改。",
+              reasons: [
+                {
+                  title: "为什么会先出现",
+                  copy: "它保留了认真挑过的感觉，又不像首饰那样会卡在佩戴习惯上。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太花、太艳、太挑穿衣风格的图案，都已经继续往后压了。"
+                }
+              ],
+              giftNote: "更适合想送得体面、又不想太冒险的时候。",
+              alt: false
+            },
+            {
+              kicker: "如果她最近更偏养生",
+              name: "茉莉乌龙茶礼 + 陶瓷杯",
+              price: "¥329",
+              summary: "更像日常能立刻用起来的礼，不张扬，但很容易被接受。",
+              tags: ["养生感", "预算友好", "送到家也合适"],
+              voiceHint: "比如：她最近更偏养生实用",
+              recordingCopy: "你补一句她最近的生活状态，或者你是想送得实用、轻松还是更像节日礼，我就先围着这张继续改。",
+              reasons: [
+                {
+                  title: "为什么会先出现",
+                  copy: "你过去给妈妈买过茶礼，这条线天然更接近你们家的送礼习惯。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "包装太老气、茶味太重、器型过于中式陈旧的组合已经先排掉。"
+                }
+              ],
+              giftNote: "适合不想送得太重、但又希望她能真的用起来。",
+              alt: true
+            },
+            {
+              kicker: "如果你更偏实用舒缓",
+              name: "热敷护颈仪礼盒",
+              price: "¥599",
+              summary: "不是最有节日感，但更像真正替她想到日常肩颈疲劳的那类礼物。",
+              tags: ["更实用", "缓解疲劳", "价格中段"],
+              voiceHint: "比如：她最近肩颈确实不舒服",
+              recordingCopy: "你补一句她最近需不需要这种照顾型礼物，或者你更想走实用还是氛围，我就先围着这张继续改。",
+              reasons: [
+                {
+                  title: "为什么会先出现",
+                  copy: "如果你这次更想送“她会一直用”的东西，这条线会比配饰和香氛更直接。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "看起来像按摩店赠品、功能太复杂、颜色太科技感的款都已经先砍掉。"
+                }
+              ],
+              giftNote: "更适合你知道她最近肩颈确实不太舒服的时候。",
+              alt: false
+            },
+            {
+              kicker: "如果你时间比较赶",
+              name: "当日花艺 + 轻甜点组合",
+              price: "¥269",
+              summary: "节日气氛最足，决策也最快，适合还没完全定好但需要当日完成的情况。",
+              tags: ["当日可送", "气氛足", "压力最小"],
+              voiceHint: "比如：这次得当天送到",
+              recordingCopy: "你补一句时间是不是很赶、会不会当面送，我就先围着这条最快落地的路线继续改。",
+              reasons: [
+                {
+                  title: "为什么会先出现",
+                  copy: "当你还没完全定好路线时，这种组合往往是风险最低、情绪价值最高的保底方案。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太商业、太像临时凑数、色系太艳俗的花艺组合都已经被排掉。"
+                }
+              ],
+              giftNote: "更适合临近母亲节、需要快速下单的时候。",
+              alt: true
+            }
+          ]
+        },
+        refined: {
+          subtitle: "我按你刚补的偏好重排了，前 3 张会更贴她。",
+          memoryIntro: "平台记忆还是草稿，真正拉准答案的是你刚补的这句。",
+          memoryPills: ["送礼记录", "最近在看", "你刚补充"],
+          memory: [
+            {
+              title: "长期记忆草稿",
+              copy:
+                "你依然更偏体面、低风险、看起来认真挑过的礼物，所以我没有把路线切到太花或太奇怪的方向。"
+            },
+            {
+              title: "最近 7 天行为",
+              copy:
+                "最近看得最多的仍然是珍珠、轻香礼盒和真丝配饰，但你刚刚补充的信息让“耳饰”这条线降了权重。"
+            }
+          ],
+          refined: ["家宴当面送", "妈妈不太戴耳饰", "喜欢淡香", "预算 600 左右"],
+          questionTool: {
+            kicker: "如果还没定，我再追问",
+            title: "还剩 2 个点会继续改排序",
+            copy: "如果还没定，我再追问两句。",
+            prompts: [
+              "更想当场有面子，还是希望礼物留得更久？",
+              "她闻香更挑吗，还是更介意颜色和图案？",
+              "你希望礼物偏温柔陪伴，还是偏实用照顾？"
+            ],
+            cardButtonTitle: "我再追问 2 个点",
+            cardButtonHint: "按住说体面 / 闻香 / 日用",
+            holdTitle: "按住说一段"
+          },
+          recordingTitle: "我听到了，正在围着关键分歧重排",
+          recordingCopy: "我先把“家宴当面送、淡香、不戴耳饰、预算 600 左右”这些条件压进去，再继续缩小后面的分歧。",
+          liveText: "“家宴上想拿得出手，但她闻香比较挑，还是更想送得温柔一点。”",
+          cards: [
+            {
+              kicker: "现在更像她会收下的",
+              name: "白玉兰护手香氛礼盒",
+              price: "¥399",
+              summary: "轻香、预算更合适，也不会卡在“戴不戴耳饰”这个条件上。",
+              tags: ["轻香", "预算更轻", "更稳妥"],
+              voiceHint: "比如：她更接受淡香和护手",
+              recordingCopy: "你补一句她对香味和日常护理的接受度，我就先围着这张和后面的路线继续改。",
+              reasons: [
+                {
+                  title: "为什么升到前面",
+                  copy: "你刚明确说了不太戴耳饰、偏淡香，这类低门槛礼盒的命中率就明显更高。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太浓、太甜、太像年轻女生自用款的礼盒，都已经继续往后压了。"
+                }
+              ],
+              giftNote: "默认带礼盒包装和一张更温柔的母亲节卡片。",
+              alt: false
+            },
+            {
+              kicker: "如果你还想送得更体面一点",
+              name: "真丝小方巾礼盒",
+              price: "¥569",
+              summary: "保留体面感和留存感，但避开了耳饰这条你刚否掉的路。",
+              tags: ["体面", "留得住", "不过分冒险"],
+              voiceHint: "比如：家宴上想更体面一点",
+              recordingCopy: "你补一句你更在意当场观感还是长期留存，我就先围着这张和第一张继续改。",
+              reasons: [
+                {
+                  title: "为什么排在这里",
+                  copy: "它比香氛更有“当面送礼”的体面感，又不会像耳饰那样卡在佩戴习惯上。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太花、太艳、太挑穿衣风格的图案，我已经先排掉了。"
+                }
+              ],
+              giftNote: "如果你更重视当面送出去的观感，这张会比第一张更强。",
+              alt: true
+            },
+            {
+              kicker: "如果你想要温柔陪伴感",
+              name: "栀子木兰香氛护理礼盒",
+              price: "¥459",
+              summary: "气质更柔和，还是节日感最强的一条，但前提是她对香味别太挑。",
+              tags: ["节日感", "柔和", "香味更重要"],
+              voiceHint: "比如：她闻香其实比较挑",
+              recordingCopy: "你补一句她对香味的敏感度，或者你更看重节日感还是稳妥，我就先围着这条继续改。",
+              reasons: [
+                {
+                  title: "为什么还在前 3",
+                  copy: "你虽然说偏淡香，但没有完全排斥香氛，所以这条路线仍然保留在前排。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "过甜、过浓、包装太夸张的组合还是继续往后压。"
+                }
+              ],
+              giftNote: "适合你想送出温柔氛围感，而不是功能型礼物的时候。",
+              alt: false
+            },
+            {
+              kicker: "如果她更偏日常实用",
+              name: "茉莉乌龙茶礼 + 陶瓷杯",
+              price: "¥329",
+              summary: "送得轻，接受门槛低，也适合饭桌上顺手递过去。",
+              tags: ["低门槛", "家宴合适", "更日常"],
+              voiceHint: "比如：这次更想送得轻一点",
+              recordingCopy: "你补一句她更偏日用还是留存感，我就先围着这张和前面的路线继续改。",
+              reasons: [
+                {
+                  title: "为什么还在候选里",
+                  copy: "如果你最后还是想从“她会立刻用上”出发，这条线仍然比穿戴类稳。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太老气、太商务的茶礼还是已经被砍掉。"
+                }
+              ],
+              giftNote: "适合你最后想保守落地、减少决策压力时再看。",
+              alt: true
+            },
+            {
+              kicker: "如果你更想送照顾感",
+              name: "热敷护颈仪礼盒",
+              price: "¥599",
+              summary: "比香氛更偏照顾感，但少了一点节日氛围和精致感。",
+              tags: ["照顾感", "更实用", "价格中段"],
+              voiceHint: "比如：你更想送照顾感",
+              recordingCopy: "你补一句她最近的身体状态，或者你想偏实用照顾还是偏节日心意，我就先围着这张继续改。",
+              reasons: [
+                {
+                  title: "为什么后移了",
+                  copy: "你现在补充的是家宴和体面感，所以它不如前几张那么贴近“当场送礼”的气质。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "功能复杂和科技感太重的款式已经被过滤。"
+                }
+              ],
+              giftNote: "如果你最后决定从“她身体舒服一点”出发，它仍然可以回来。",
+              alt: false
+            },
+            {
+              kicker: "如果你时间临近了",
+              name: "低饱和花艺 + 甜点组合",
+              price: "¥299",
+              summary: "最省心的保底方案，适合你临近节日还没定好，但想保证场面体面。",
+              tags: ["最省心", "当日可送", "保底方案"],
+              voiceHint: "比如：这次需要当天完成",
+              recordingCopy: "你补一句时间是不是来不及了、会不会当面送，我就先围着这条保底路线继续改。",
+              reasons: [
+                {
+                  title: "为什么留到最后",
+                  copy: "它解决的是时效和节日气氛，不是你现在更重视的长期留存和个人偏好。"
+                },
+                {
+                  title: "已经避掉的坑",
+                  copy: "太商业、色系过艳、像临时凑数的组合已经被继续过滤。"
+                }
+              ],
+              giftNote: "更适合节前最后一刻想快速完成，而不是想认真挑一份长期留得住的礼。",
+              alt: true
+            }
+          ]
+        }
+      };
+
+      const screenSubtitle = document.getElementById("screenSubtitle");
+      const cardsList = document.getElementById("cardsList");
+      const memoryBadge = document.getElementById("memoryBadge");
+      const memoryIntro = document.getElementById("memoryIntro");
+      const memoryPills = document.getElementById("memoryPills");
+      const memoryStack = document.getElementById("memoryStack");
+      const refinedStrip = document.getElementById("refinedStrip");
+      const refinedTags = document.getElementById("refinedTags");
+      const bubbleTrigger = document.getElementById("bubbleTrigger");
+      const sheetBackdrop = document.getElementById("sheetBackdrop");
+      const memorySheet = document.getElementById("memorySheet");
+      const memorySheetClose = document.getElementById("memorySheetClose");
+      const assistantSheet = document.getElementById("assistantSheet");
+      const sheetTitle = document.getElementById("sheetTitle");
+      const sheetCopy = document.getElementById("sheetCopy");
+      const questionGuides = document.getElementById("questionGuides");
+      const sheetHoldButton = document.getElementById("sheetHoldButton");
+      const sheetClose = document.getElementById("sheetClose");
+      const recordingBackdrop = document.getElementById("recordingBackdrop");
+      const recordingScreen = document.getElementById("recordingScreen");
+      const recordingTitle = document.getElementById("recordingTitle");
+      const recordingCopy = document.getElementById("recordingCopy");
+      const liveText = document.getElementById("liveText");
+      const saveButton = document.getElementById("saveButton");
+      const resetButton = document.getElementById("resetButton");
+
+      let currentState = "default";
+      let isSaved = false;
+      let isHolding = false;
+
+      function renderMemory(items) {
+        memoryStack.innerHTML = items
+          .map(
+            (item) => `
+              <div class="memory-item">
+                <strong>${item.title}</strong>
+                <p>${item.copy}</p>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function renderRefined(tags) {
+        refinedTags.innerHTML = tags
+          .map((tag) => `<span class="refined-tag">${tag}</span>`)
+          .join("");
+      }
+
+      function agentAvatarMarkup() {
+        return `
+          <div class="agent-avatar" aria-hidden="true">
+            <div class="agent-face"></div>
+            <div class="agent-bow"></div>
+            <div class="agent-mouth"></div>
+          </div>
+        `;
+      }
+
+      function renderCard(card, order, index) {
+        return `
+          <article class="route-card${card.alt ? " alt" : ""}">
+            <span class="callout">${order}</span>
+            <span class="route-kicker">${card.kicker}</span>
+            <div class="route-head">
+              <h2 class="route-name">${card.name}</h2>
+              <span class="route-price">${card.price}</span>
+            </div>
+            <p class="route-summary">${card.summary}</p>
+            <div class="quick-tags">
+              ${card.tags.map((tag) => `<span class="quick-tag">${tag}</span>`).join("")}
+            </div>
+            <details class="secondary-details">
+              <summary class="secondary-toggle">为什么是它</summary>
+              <div class="reason-stack">
+                ${card.reasons
+                  .map(
+                    (reason) => `
+                      <div class="reason-item">
+                        <strong>${reason.title}</strong>
+                        <span>${reason.copy}</span>
+                      </div>
+                    `
+                  )
+                  .join("")}
+              </div>
+              <p class="gift-note"><strong>补充说明：</strong>${card.giftNote}</p>
+            </details>
+            <button class="route-voice-btn route-trigger" data-card-index="${index}">
+              ${agentAvatarMarkup()}
+              <div class="voice-copy">
+                <strong>按住补一句，我围着这份改</strong>
+                <span>${card.voiceHint}</span>
+              </div>
+            </button>
+          </article>
+        `;
+      }
+
+      function renderQuestionCard(question, order) {
+        return `
+          <article class="question-card">
+            <span class="callout">${order}</span>
+            <span class="question-kicker">${question.kicker}</span>
+            <h2 class="question-title">${question.title}</h2>
+            <p class="question-copy">${question.copy}</p>
+            <div class="question-prompt-list">
+              ${question.prompts
+                .map((prompt) => `<div class="question-prompt">${prompt}</div>`)
+                .join("")}
+            </div>
+            <button class="route-voice-btn question-trigger" data-trigger="question-tool">
+              ${agentAvatarMarkup()}
+              <div class="voice-copy">
+                <strong>${question.cardButtonTitle}</strong>
+                <span>${question.cardButtonHint}</span>
+              </div>
+            </button>
+          </article>
+        `;
+      }
+
+      function renderCards(state) {
+        let order = 2;
+        const html = [];
+        state.cards.forEach((card, index) => {
+          html.push(renderCard(card, order, index));
+          order += 1;
+          if (index === 2) {
+            html.push(renderQuestionCard(state.questionTool, order));
+            order += 1;
+          }
+        });
+        cardsList.innerHTML = html.join("");
+      }
+
+      function applyState(name) {
+        const state = states[name];
+        currentState = name;
+
+        screenSubtitle.textContent = state.subtitle;
+        memoryIntro.textContent = state.memoryIntro;
+        memoryPills.innerHTML = state.memoryPills
+          .map((tag) => `<span class="memory-pill">${tag}</span>`)
+          .join("");
+        renderMemory(state.memory);
+
+        if (state.refined.length) {
+          refinedStrip.classList.remove("hidden");
+          renderRefined(state.refined);
+        } else {
+          refinedStrip.classList.add("hidden");
+          refinedTags.innerHTML = "";
+        }
+
+        renderCards(state);
+
+        sheetTitle.textContent = state.questionTool.title;
+        sheetCopy.textContent = state.questionTool.copy;
+        questionGuides.innerHTML = state.questionTool.prompts
+          .map((prompt) => `<div class="guide-item">${prompt}</div>`)
+          .join("");
+        sheetHoldButton.textContent = state.questionTool.holdTitle;
+        recordingTitle.textContent = state.recordingTitle;
+        recordingCopy.textContent = state.recordingCopy;
+        liveText.textContent = state.liveText;
+      }
+
+      function openMemorySheet() {
+        assistantSheet.classList.remove("open");
+        memorySheet.classList.add("open");
+        sheetBackdrop.classList.add("open");
+      }
+
+      function openAssistantSheet() {
+        memorySheet.classList.remove("open");
+        assistantSheet.classList.add("open");
+        sheetBackdrop.classList.add("open");
+      }
+
+      function openRouteRecording(card) {
+        recordingTitle.textContent = `正在听，我先围着「${card.name}」这张继续改`;
+        recordingCopy.textContent =
+          card.recordingCopy || "你补一句她的场景、偏好或预算，我会先围着这张和相邻路线继续改。";
+        liveText.textContent = `“${card.voiceHint.replace(/^比如：/, "")}”`;
+        openRecording();
+      }
+
+      function closeSheet() {
+        memorySheet.classList.remove("open");
+        assistantSheet.classList.remove("open");
+        sheetBackdrop.classList.remove("open");
+      }
+
+      function openRecording() {
+        isHolding = true;
+        closeSheet();
+        recordingBackdrop.classList.add("open");
+        recordingScreen.classList.add("open");
+      }
+
+      function closeRecording(applyChanges) {
+        if (!isHolding) return;
+        isHolding = false;
+        recordingBackdrop.classList.remove("open");
+        recordingScreen.classList.remove("open");
+        if (applyChanges) {
+          applyState("refined");
+        }
+      }
+
+      memoryBadge.addEventListener("click", openMemorySheet);
+      memorySheetClose.addEventListener("click", closeSheet);
+      bubbleTrigger.addEventListener("click", openAssistantSheet);
+      sheetBackdrop.addEventListener("click", closeSheet);
+      sheetClose.addEventListener("click", closeSheet);
+
+      cardsList.addEventListener("pointerdown", (event) => {
+        const routeTrigger = event.target.closest(".route-trigger");
+        if (routeTrigger) {
+          const cardIndex = Number(routeTrigger.dataset.cardIndex);
+          const card = states[currentState].cards[cardIndex];
+          if (!Number.isNaN(cardIndex) && card) {
+            event.preventDefault();
+            openRouteRecording(card);
+            return;
+          }
+        }
+
+        const trigger = event.target.closest(".question-trigger");
+        if (!trigger) return;
+        event.preventDefault();
+        openAssistantSheet();
+      });
+
+      sheetHoldButton.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        openRecording();
+      });
+
+      window.addEventListener("pointerup", () => {
+        if (isHolding) {
+          closeRecording(true);
+        }
+      });
+
+      recordingBackdrop.addEventListener("click", () => closeRecording(false));
+
+      saveButton.addEventListener("click", () => {
+        isSaved = !isSaved;
+        saveButton.textContent = isSaved ? "已收藏" : "收藏";
+      });
+
+      resetButton.addEventListener("click", () => {
+        closeSheet();
+        if (isHolding) {
+          closeRecording(false);
+        }
+        applyState("default");
+      });
+
+      applyState(currentState);
+    </script>
+  </body>
+</html>
