@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mother's Day Gift Agent Review Prototype</title>
+    <title>AI Shopping Agent | AI选购 / AI搜 Review Prototype</title>
     <style>
       :root {
         color-scheme: light;
@@ -453,33 +453,80 @@
         color: var(--green);
       }
 
+      .product-row {
+        display: flex;
+        gap: 12px;
+        align-items: start;
+        margin-top: 10px;
+      }
+
+      .product-media {
+        width: 94px;
+        flex: 0 0 94px;
+      }
+
+      .product-image-frame {
+        overflow: hidden;
+        border-radius: 20px;
+        border: 1px solid rgba(17, 24, 39, 0.08);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+        background: linear-gradient(180deg, #fff8f2, #f5efe8);
+      }
+
+      .product-image {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+
+      .product-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .product-label {
+        display: block;
+        color: var(--tertiary);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
       .route-head {
         display: flex;
         justify-content: space-between;
-        gap: 12px;
+        gap: 10px;
         align-items: start;
-        margin-top: 8px;
+        margin-top: 4px;
       }
 
       .route-name {
         margin: 0;
-        font-size: 20px;
-        line-height: 1.08;
+        font-size: 19px;
+        line-height: 1.12;
         letter-spacing: -0.04em;
       }
 
       .route-price {
+        padding-top: 2px;
         font-size: 15px;
         font-weight: 700;
         white-space: nowrap;
+        color: var(--text);
       }
 
       .route-summary {
-        margin: 7px 0 0;
+        margin: 4px 0 0;
         color: var(--secondary);
         font-size: 13px;
-        line-height: 1.45;
+        line-height: 1.5;
         letter-spacing: -0.01em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        overflow: hidden;
       }
 
       .quick-tags {
@@ -1132,27 +1179,27 @@
     <main class="page">
       <section class="hero">
         <div class="hero-meta">
-          <span class="meta-pill">Review Artifact</span>
-          <span class="meta-pill">Mother's Day</span>
+          <span class="meta-pill">AI Shopping Agent</span>
+          <span class="meta-pill">AI选购 / AI搜</span>
           <span class="meta-pill">Memory First</span>
-          <span class="meta-pill">Voice Refinement</span>
+          <span class="meta-pill">Async Recommendation</span>
         </div>
 
-        <h1>让原型说话，让说明退后。</h1>
-        <p>主屏先给可消费的礼物路线，偏好依据和推荐理由都降级成可展开的次级信息。</p>
+        <h1>AI选购 / AI搜</h1>
+        <p>把长期偏好、短期行为和场景任务拼成一条脱离主搜的 AI 选购链路。先给一版可信商品，再让用户用语音补更多喜好。</p>
 
         <div class="principles">
           <div class="principle">
-            <strong>默认短</strong>
-            <span>首屏只保留结论和统一动作。</span>
+            <strong>01 长短期一起起稿</strong>
+            <span>先用长期偏好和最近行为起一版 shortlist，不把用户当成冷启动。</span>
           </div>
           <div class="principle">
-            <strong>依据收起</strong>
-            <span>偏好与推荐依据按需展开。</span>
+            <strong>02 语音补偏好</strong>
+            <span>agent 主动追问关键分歧，用户只要按住说出更多喜好，不用填表。</span>
           </div>
           <div class="principle">
-            <strong>一个入口</strong>
-            <span>所有 refinement 都回到按住说话。</span>
+            <strong>03 场景化异步推荐</strong>
+            <span>不是主搜改皮，而是围绕任务场景异步回访、持续推荐的独立链路。</span>
           </div>
         </div>
       </section>
@@ -1162,9 +1209,9 @@
           <div class="panel-head">
             <div>
               <span class="panel-label">Prototype</span>
-              <h2>母亲节送礼主屏</h2>
+              <h2>AI选购 Demo</h2>
             </div>
-            <p class="panel-subcopy">现在主屏更短，依据信息默认收起。</p>
+            <p class="panel-subcopy">用母亲节送礼场景验证：长期偏好起稿、语音细化、脱离主搜的场景化推荐。</p>
           </div>
 
           <div class="device">
@@ -1181,13 +1228,13 @@
                     <button class="ghost-btn" id="resetButton">重置</button>
                     <button class="ghost-btn" id="saveButton">收藏</button>
                   </div>
-                  <p class="eyebrow">母亲节送礼</p>
+                  <p class="eyebrow">AI选购 · 母亲节送礼</p>
                   <div class="title-row">
-                    <h1 class="screen-title">先看这 6 个</h1>
-                    <button class="context-badge" id="memoryBadge">已参考 <em>1</em></button>
+                    <h1 class="screen-title">先看这 6 个推荐</h1>
+                    <button class="context-badge" id="memoryBadge">已参考 <em>2</em></button>
                   </div>
                   <p class="screen-subtitle" id="screenSubtitle">
-                    先给你 6 个方向，滑到第 3 个我再追问。
+                    我先按长期偏好和最近行为起草，滑到第 3 个我再追问。
                   </p>
                   <div class="refined-strip hidden" id="refinedStrip">
                     <strong>已加进来</strong>
@@ -1205,7 +1252,7 @@
                   <div class="agent-mouth"></div>
                 </div>
                 <div class="bubble-copy">
-                  <strong>跟小礼说一句</strong>
+                  <strong>补一句偏好</strong>
                   <span>点开后按住说</span>
                 </div>
               </button>
@@ -1215,7 +1262,7 @@
                 <div class="grabber"></div>
                 <div class="sheet-header">
                   <div class="memory-sheet-title-row">
-                    <h3>我参考了什么</h3>
+                    <h3>我用哪些信号先起草</h3>
                     <button class="sheet-close" id="memorySheetClose" style="width:auto;min-width:44px;margin-top:0;padding:0 14px;">关闭</button>
                   </div>
                   <p id="memoryIntro">
@@ -1278,10 +1325,10 @@
         <aside class="panel">
           <div class="panel-head">
             <div>
-              <span class="panel-label">Design Notes</span>
-              <h2>四个关键判断</h2>
+              <span class="panel-label">Key Judgments</span>
+              <h2>四个核心假设</h2>
             </div>
-            <p class="panel-subcopy">压缩成短判断，避免说明盖过原型。</p>
+            <p class="panel-subcopy">把你定义的问题和这轮调研里真正成立的产品判断，压成可评审的短句。</p>
           </div>
 
           <div class="notes-list">
@@ -1289,13 +1336,14 @@
               <div class="note-head">
                 <div class="note-number">1</div>
                 <div>
-                  <h3 class="note-title">偏好依据退出主流内容流，改成角标备注</h3>
-                  <p class="note-body">这类信息有价值，但不该占据首屏高度。默认只留一个可点击的小入口。</p>
+                  <h3 class="note-title">平台已有偏好记忆，不该假装自己从零开始</h3>
+                  <p class="note-body">AI 选购的第一步不是问卷，而是先把长期偏好和短期行为压成一版可信草稿。</p>
                 </div>
               </div>
               <div class="note-points">
-                <div class="point"><strong>原则：</strong>先给结果，依据后看。</div>
-                <div class="point"><strong>评审：</strong>首屏不再有大块记忆框。</div>
+                <div class="point"><strong>你的判断：</strong>平台已经知道用户很多，不该一上来就像冷启动表单。</div>
+                <div class="point"><strong>调研补充：</strong>移动端更适合先给可信草稿，再让用户决定要不要细化。</div>
+                <div class="point"><strong>页面落点：</strong>顶部 thesis、记忆入口、首轮 6 张卡都围着这点展开。</div>
               </div>
             </article>
 
@@ -1303,13 +1351,14 @@
               <div class="note-head">
                 <div class="note-number">2</div>
                 <div>
-                  <h3 class="note-title">第一轮先给 6 个，让用户先连续浏览</h3>
-                  <p class="note-body">不要太早追问。先把 6 张可消费的路线放出来，让用户快速建立范围感和偏好感。</p>
+                  <h3 class="note-title">先给结果，再用语音收窄，比先问问题更像真实选购</h3>
+                  <p class="note-body">用户先扫过第一版商品，再补一句偏好，信任建立会比连续问 3 到 5 个问题更快。</p>
                 </div>
               </div>
               <div class="note-points">
-                <div class="point"><strong>原则：</strong>先浏览，再收敛。</div>
-                <div class="point"><strong>评审：</strong>默认首轮至少能看到 6 个方向。</div>
+                <div class="point"><strong>你的判断：</strong>语音应该是低门槛补偏好，不是让用户继续答题。</div>
+                <div class="point"><strong>调研补充：</strong>result-first 的移动模式比 question-first 更适合模糊、高情绪的消费决策。</div>
+                <div class="point"><strong>页面落点：</strong>第 3 张后才追问，所有 refinement 都回到按住说。</div>
               </div>
             </article>
 
@@ -1317,13 +1366,14 @@
               <div class="note-head">
                 <div class="note-number">3</div>
                 <div>
-                  <h3 class="note-title">看到第 3 个后，插一个 agent 主导的提问卡</h3>
-                  <p class="note-body">不是用户自己想该补什么，而是系统主动追问最能改变命中的 3 个关键问题。</p>
+                  <h3 class="note-title">AI选购不是主搜改皮，而是场景化异步推荐链路</h3>
+                  <p class="note-body">这类任务不该硬塞回主搜结果流里，它更像一个围绕场景持续起草、回访和改写的独立 brief。</p>
                 </div>
               </div>
               <div class="note-points">
-                <div class="point"><strong>原则：</strong>让 agent 主导追问，而不是让用户自己猜。</div>
-                <div class="point"><strong>评审：</strong>问题卡必须插在浏览流中段，而不是顶端。</div>
+                <div class="point"><strong>你的判断：</strong>高歧义选购要脱离主搜链路，做场景化异步推荐。</div>
+                <div class="point"><strong>调研补充：</strong>更接近 Pulse 式 brief 和回访，而不是一屏塞满召回与排序解释。</div>
+                <div class="point"><strong>页面落点：</strong>产品标题用 AI选购 / AI搜，礼物场景只作为其中一个 demo。</div>
               </div>
             </article>
 
@@ -1331,24 +1381,25 @@
               <div class="note-head">
                 <div class="note-number">4</div>
                 <div>
-                  <h3 class="note-title">让 IP 形象贯穿主屏、气泡、半屏引导和全屏录音态</h3>
-                  <p class="note-body">用户记住的不是按钮，而是同一个会听他说话的助手。</p>
+                  <h3 class="note-title">卡片必须具体到商品，才能把“推荐”从概念拉回消费决策</h3>
+                  <p class="note-body">只有路线和理由还不够，用户需要同时看到商品图、商品名和一句能立刻理解的推荐理由。</p>
                 </div>
               </div>
               <div class="note-points">
-                <div class="point"><strong>原则：</strong>同一人格、同一入口、同一动作。</div>
-                <div class="point"><strong>评审：</strong>气泡到录音态不能像换系统。</div>
+                <div class="point"><strong>你的判断：</strong>demo 卡片该像真商品，而不是抽象概念块。</div>
+                <div class="point"><strong>调研补充：</strong>左图右文的商品卡比纯文字路线更快扫读，也更容易建立信任。</div>
+                <div class="point"><strong>页面落点：</strong>这轮卡片改成 mock 商品图 + 商品名称 + 推荐理由的并排结构。</div>
               </div>
             </article>
           </div>
 
           <div class="review-check">
-            <h3>评审只看 4 个问题</h3>
+            <h3>评审先看 4 个问题</h3>
             <ol class="check-list">
-              <li>首屏是不是先给结论，而不是先讲理由？</li>
-              <li>是不是先给了 6 个方向，而不是太早让用户回答问题？</li>
-              <li>第 3 张后面的追问卡，是不是问到了会真改变排序的关键问题？</li>
-              <li>IP 气泡到录音态是不是像同一个助手？</li>
+              <li>第一屏是不是已经用长期偏好和短期行为起了可信草稿？</li>
+              <li>用户是不是先看到商品，再决定要不要补偏好？</li>
+              <li>语音 refinement 是不是比问卷更轻、更像自然表达？</li>
+              <li>这个能力看起来是不是像独立 AI选购链路，而不是主搜列表的一层壳？</li>
             </ol>
           </div>
         </aside>
@@ -1356,9 +1407,112 @@
     </main>
 
     <script>
+      const svgToDataUri = (svg) => `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg.trim())}`;
+
+      const PRODUCT_IMAGES = {
+        pearl: svgToDataUri(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff5ec" />
+                <stop offset="100%" stop-color="#f1d7ca" />
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="24" fill="url(#bg)" />
+            <rect x="18" y="24" width="84" height="72" rx="18" fill="#fffaf7" opacity="0.95" />
+            <circle cx="43" cy="58" r="11" fill="#efe3dc" />
+            <circle cx="60" cy="58" r="11" fill="#f7ece5" />
+            <circle cx="77" cy="58" r="11" fill="#efe3dc" />
+            <path d="M31 82c8-9 18-14 29-14s21 5 29 14" fill="none" stroke="#cfb7ac" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        `),
+        fragrance: svgToDataUri(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff7ee" />
+                <stop offset="100%" stop-color="#f5e0d5" />
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="24" fill="url(#bg)" />
+            <rect x="48" y="28" width="24" height="10" rx="4" fill="#2f3f44" />
+            <rect x="38" y="38" width="44" height="50" rx="14" fill="#fffdf8" />
+            <rect x="44" y="44" width="32" height="38" rx="10" fill="#f9e5dc" />
+            <circle cx="29" cy="80" r="11" fill="#ffdfe4" />
+            <circle cx="23" cy="68" r="8" fill="#ffcfd8" />
+            <circle cx="37" cy="68" r="8" fill="#ffcad2" />
+            <rect x="25" y="80" width="8" height="16" rx="4" fill="#6f8c5a" />
+          </svg>
+        `),
+        scarf: svgToDataUri(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff9ef" />
+                <stop offset="100%" stop-color="#eddcc7" />
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="24" fill="url(#bg)" />
+            <path d="M26 84c16-18 28-29 40-29 11 0 18 6 28 19l-10 16H36Z" fill="#d0b08b" />
+            <path d="M38 35h50c8 0 14 6 14 14v11H53c-13 0-20-7-20-20Z" fill="#f3e8dc" />
+            <path d="M47 41c7 8 14 12 23 12" stroke="#b89163" stroke-width="4" stroke-linecap="round" />
+            <path d="M56 73c7 7 13 12 19 14" stroke="#f7efe3" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        `),
+        tea: svgToDataUri(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f5fbf5" />
+                <stop offset="100%" stop-color="#d9ead8" />
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="24" fill="url(#bg)" />
+            <rect x="20" y="28" width="38" height="58" rx="12" fill="#eff6ed" />
+            <rect x="26" y="34" width="26" height="32" rx="8" fill="#adc3a3" />
+            <rect x="66" y="56" width="24" height="24" rx="8" fill="#fffaf6" />
+            <path d="M90 62h5c5 0 7 4 7 8s-2 8-7 8h-5" fill="none" stroke="#a47b54" stroke-width="4" stroke-linecap="round" />
+            <path d="M71 44c2-5 7-8 12-8" stroke="#8ca07c" stroke-width="4" stroke-linecap="round" />
+            <path d="M78 39c1-5 5-8 10-10" stroke="#8ca07c" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        `),
+        neck: svgToDataUri(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f7f5ff" />
+                <stop offset="100%" stop-color="#ddd9f2" />
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="24" fill="url(#bg)" />
+            <path d="M36 38c-9 10-14 23-14 35 0 19 10 31 27 31 12 0 17-7 17-17V60h-12v24c0 4-2 6-6 6-8 0-12-7-12-18 0-10 3-18 9-26Z" fill="#23242a" />
+            <path d="M84 38c9 10 14 23 14 35 0 19-10 31-27 31-12 0-17-7-17-17V60h12v24c0 4 2 6 6 6 8 0 12-7 12-18 0-10-3-18-9-26Z" fill="#23242a" opacity="0.92" />
+            <circle cx="44" cy="70" r="6" fill="#ff8f6f" opacity="0.85" />
+            <circle cx="76" cy="70" r="6" fill="#ff8f6f" opacity="0.85" />
+          </svg>
+        `),
+        flower: svgToDataUri(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff8f3" />
+                <stop offset="100%" stop-color="#f0d8d2" />
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="24" fill="url(#bg)" />
+            <path d="M60 28c6 10 8 18 8 26s-3 17-8 25c-6-8-8-16-8-25s2-16 8-26Z" fill="#ffd0d8" />
+            <circle cx="44" cy="44" r="12" fill="#ffced5" />
+            <circle cx="76" cy="44" r="12" fill="#ffd9df" />
+            <circle cx="54" cy="54" r="12" fill="#fff1b8" />
+            <path d="M35 60 60 96 85 60c-14 2-22 2-25 2s-11 0-25-2Z" fill="#f1ebe4" />
+            <path d="M50 67 60 94 70 67" stroke="#9ab68f" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        `)
+      };
+
       const states = {
         default: {
-          subtitle: "先给你 6 个方向，滑到第 3 个我再追问。",
+          subtitle: "我先按长期偏好和最近行为起草，滑到第 3 个我再追问。",
           memoryIntro: "已参考你的送礼记录和最近 7 天在看的内容。",
           memoryPills: ["送礼记录", "最近在看", "预算带"],
           memory: [
@@ -1393,6 +1547,7 @@
           cards: [
             {
               kicker: "更稳妥地送",
+              imageKey: "pearl",
               name: "淡水珍珠耳钉礼盒",
               price: "¥699",
               summary: "体面、不容易送错，也更像你过去会给妈妈挑的那类礼物。",
@@ -1414,6 +1569,7 @@
             },
             {
               kicker: "如果你更想送出氛围感",
+              imageKey: "fragrance",
               name: "栀子木兰香氛护理礼盒",
               price: "¥459",
               summary: "更柔和、更有节日氛围，是比配饰更轻一点的第二条路线。",
@@ -1435,6 +1591,7 @@
             },
             {
               kicker: "如果你还想留得更久一点",
+              imageKey: "scarf",
               name: "真丝小方巾礼盒",
               price: "¥569",
               summary: "比香氛更耐留，也比首饰更轻风险，是稳中带一点心意的路线。",
@@ -1456,6 +1613,7 @@
             },
             {
               kicker: "如果她最近更偏养生",
+              imageKey: "tea",
               name: "茉莉乌龙茶礼 + 陶瓷杯",
               price: "¥329",
               summary: "更像日常能立刻用起来的礼，不张扬，但很容易被接受。",
@@ -1477,6 +1635,7 @@
             },
             {
               kicker: "如果你更偏实用舒缓",
+              imageKey: "neck",
               name: "热敷护颈仪礼盒",
               price: "¥599",
               summary: "不是最有节日感，但更像真正替她想到日常肩颈疲劳的那类礼物。",
@@ -1498,6 +1657,7 @@
             },
             {
               kicker: "如果你时间比较赶",
+              imageKey: "flower",
               name: "当日花艺 + 轻甜点组合",
               price: "¥269",
               summary: "节日气氛最足，决策也最快，适合还没完全定好但需要当日完成的情况。",
@@ -1520,7 +1680,7 @@
           ]
         },
         refined: {
-          subtitle: "我按你刚补的偏好重排了，前 3 张会更贴她。",
+          subtitle: "我按你刚补的偏好重排了，前 3 个更像你这次会下单的。",
           memoryIntro: "平台记忆还是草稿，真正拉准答案的是你刚补的这句。",
           memoryPills: ["送礼记录", "最近在看", "你刚补充"],
           memory: [
@@ -1555,6 +1715,7 @@
           cards: [
             {
               kicker: "现在更像她会收下的",
+              imageKey: "fragrance",
               name: "白玉兰护手香氛礼盒",
               price: "¥399",
               summary: "轻香、预算更合适，也不会卡在“戴不戴耳饰”这个条件上。",
@@ -1576,6 +1737,7 @@
             },
             {
               kicker: "如果你还想送得更体面一点",
+              imageKey: "scarf",
               name: "真丝小方巾礼盒",
               price: "¥569",
               summary: "保留体面感和留存感，但避开了耳饰这条你刚否掉的路。",
@@ -1597,6 +1759,7 @@
             },
             {
               kicker: "如果你想要温柔陪伴感",
+              imageKey: "fragrance",
               name: "栀子木兰香氛护理礼盒",
               price: "¥459",
               summary: "气质更柔和，还是节日感最强的一条，但前提是她对香味别太挑。",
@@ -1618,6 +1781,7 @@
             },
             {
               kicker: "如果她更偏日常实用",
+              imageKey: "tea",
               name: "茉莉乌龙茶礼 + 陶瓷杯",
               price: "¥329",
               summary: "送得轻，接受门槛低，也适合饭桌上顺手递过去。",
@@ -1639,6 +1803,7 @@
             },
             {
               kicker: "如果你更想送照顾感",
+              imageKey: "neck",
               name: "热敷护颈仪礼盒",
               price: "¥599",
               summary: "比香氛更偏照顾感，但少了一点节日氛围和精致感。",
@@ -1660,6 +1825,7 @@
             },
             {
               kicker: "如果你时间临近了",
+              imageKey: "flower",
               name: "低饱和花艺 + 甜点组合",
               price: "¥299",
               summary: "最省心的保底方案，适合你临近节日还没定好，但想保证场面体面。",
@@ -1747,11 +1913,22 @@
           <article class="route-card${card.alt ? " alt" : ""}">
             <span class="callout">${order}</span>
             <span class="route-kicker">${card.kicker}</span>
-            <div class="route-head">
-              <h2 class="route-name">${card.name}</h2>
-              <span class="route-price">${card.price}</span>
+            <div class="product-row">
+              <div class="product-media">
+                <div class="product-image-frame">
+                  <img class="product-image" src="${PRODUCT_IMAGES[card.imageKey]}" alt="${card.name} mock 商品图" />
+                </div>
+              </div>
+              <div class="product-copy">
+                <span class="product-label">商品名称</span>
+                <div class="route-head">
+                  <h2 class="route-name">${card.name}</h2>
+                  <span class="route-price">${card.price}</span>
+                </div>
+                <span class="product-label">推荐理由</span>
+                <p class="route-summary">${card.summary}</p>
+              </div>
             </div>
-            <p class="route-summary">${card.summary}</p>
             <div class="quick-tags">
               ${card.tags.map((tag) => `<span class="quick-tag">${tag}</span>`).join("")}
             </div>
@@ -1824,6 +2001,7 @@
         currentState = name;
 
         screenSubtitle.textContent = state.subtitle;
+        memoryBadge.innerHTML = `已参考 <em>${state.memoryPills.length}</em>`;
         memoryIntro.textContent = state.memoryIntro;
         memoryPills.innerHTML = state.memoryPills
           .map((tag) => `<span class="memory-pill">${tag}</span>`)
